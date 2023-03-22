@@ -37,17 +37,16 @@ public class AtributosController {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			planeta = mapper.readValue(json, Planeta.class);
-			Double pesoEmMarte = planeta.getPeso() * GRAVIDADE;		
-			return new ResponseEntity<Object>(pesoEmMarte, HttpStatus.OK);
+			planeta.setPesoEmMarte(planeta.getPeso() * GRAVIDADE);
+			return new ResponseEntity<Object>(planeta.getPesoEmMarte(), HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>("JSON Invalido", HttpStatus.BAD_REQUEST);
 		}
 			
 	}
 	
-	
 	@GetMapping(value = "/callKanye") 
-	private ResponseEntity<String> getCallKanye(){
+	public ResponseEntity<String> getCallKanye(){
 		String uri = "https://api.kanye.rest";
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -59,7 +58,7 @@ public class AtributosController {
 	}
 	
 	@GetMapping(value = "/callCockTail") 
-	private ResponseEntity<String> getcallCockTail(){
+	public ResponseEntity<String> getcallCockTail(){
 		String uri = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
